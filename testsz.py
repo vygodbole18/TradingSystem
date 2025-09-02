@@ -1,11 +1,11 @@
 from fetch import fetch_ohlc_data
-from supplyZone import find_supply_zones   # adjust import if you put it in a different file
+from supplyZone import find_supply_zones   
 
 if __name__ == "__main__":
     # Pick any symbol you like; here using RELIANCE as example
     symbol = "HAL"
     interval = "day"      # 1-minute, 5-minute, 15-minute, day, etc.
-    count = 200           # how many candles to fetch
+    count = 200           # how many candles to fetch       
 
     # Fetch OHLC candles
     candles = fetch_ohlc_data(symbol, interval, count)

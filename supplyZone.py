@@ -35,7 +35,7 @@ def find_supply_zones(candles, lookback=100):
 
         # We touched/breached the line
         if classify(c) != RED:
-            # Not decisive red: lift probe line to this high
+            # Not decisive red: move probe line to this high
             line = c["high"]
             i -= 1
             continue
@@ -64,9 +64,9 @@ def find_supply_zones(candles, lookback=100):
         if leg_in:
             kin = classify(leg_in)
             if kin == GREEN:
-                zone_type = "RBD"  # reversal supply
+                zone_type = "RBD" 
             elif kin == RED:
-                zone_type = "DBD"  # continuation supply
+                zone_type = "DBD"  
             else:
                 zone_type = "UNCLASSIFIED"
         else:
@@ -78,18 +78,18 @@ def find_supply_zones(candles, lookback=100):
         base_body_low  = min(body_lows)
 
         if zone_type == "RBD":
-            # Proximal: lowest low of base bodies
+          
             proximal = base_body_low
-            # Distal: highest high across leg-in + base + leg-out
+           
             highs = [c["high"]] + [b["high"] for b in base]
             if leg_in:
                 highs.append(leg_in["high"])
             distal = max(highs)
 
         elif zone_type == "DBD":
-            # Proximal: lowest low of base bodies
+            
             proximal = base_body_low
-            # Distal: highest high of base or leg-out
+           
             highs = [c["high"]] + [b["high"] for b in base]
             distal = max(highs)
 

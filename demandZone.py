@@ -48,7 +48,7 @@ def find_demand_zones(candles, lookback=100):
             j -= 1
 
         if not base:
-            # No base cluster found; tighten line to current low and continue
+            
             line = c["low"]
             i -= 1
             continue
@@ -59,7 +59,7 @@ def find_demand_zones(candles, lookback=100):
             i = i - 1
             continue
 
-        # Determine leg-in (the candle immediately before the base cluster)
+        # Determine leg-in 
         leg_in = candles[j] if j >= 0 else None
         zone_type = None
         if leg_in:
@@ -73,7 +73,7 @@ def find_demand_zones(candles, lookback=100):
         else:
             zone_type = "UNCLASSIFIED"
 
-        # Compute zone bounds per your spec
+      
         highs_base = [b["high"] for b in base]
         lows_base  = [b["low"]  for b in base]
         base_high  = max(highs_base)
@@ -89,11 +89,11 @@ def find_demand_zones(candles, lookback=100):
             zone_top = base_high
             zone_bottom = base_low
         else:
-            # Fallback: base-only bounds
+            
             zone_top = base_high
             zone_bottom = base_low
 
-        # Record the zone
+        
         zones.append({
             "type": zone_type,
             "top": zone_top,
@@ -114,5 +114,4 @@ def find_demand_zones(candles, lookback=100):
         # Advance left from where we were (avoid re-detecting the same structure)
         i = j  # jump to the candle before the base; keeps scanning older bars
 
-    # Optional: newest-first ordering
     return zones
