@@ -9,7 +9,7 @@ def _fmt_date(d):
     except Exception:
         return str(d)
 
-def test_symbol(symbol: str, lookback: int = 100):
+def test_symbol(symbol: str, lookback: int = 25):
     print(f"\n=== {symbol} | DAILY | last {lookback} bars ===")
     candles = fetch_ohlc_data(symbol, "day", lookback)
 
@@ -26,4 +26,4 @@ def test_symbol(symbol: str, lookback: int = 100):
 if __name__ == "__main__":
     symbols = ["RELIANCE", "HDFCBANK", "TCS"]  
     for s in symbols:
-        test_symbol(s, lookback=100)
+        test_symbol(s, lookback=25)
