@@ -12,7 +12,13 @@ This project uses **Zerodha Kite Connect API** to fetch daily OHLC candles and d
 - `swings_percent_bilateral.py` → swing detection  
 - `resistance_support_percent_bilateral.py` → support/resistance levels  
 - `gaps_simple.py` → simple gap detection  
+- `demandZone.py` → demand zone detection
+- `supplyZone.py` → supply zone detection
+- `pro_gaps.py` → pro gap detection
+- `novice_gaps.py` → novice gap detection  
+- `momentum_gaps.py` → momentum gap detection 
 - `test_*.py` → tester scripts for each module  
+  
 
 ##  Setup Instructions
 
