@@ -8,7 +8,7 @@ RED = "red"
 BASING = "basing"
 
 def classify(c: Candle) -> str:
-    """Simple color classifier consistent with your earlier logic."""
+    
     rng = float(c["high"]) - float(c["low"])
     body = abs(float(c["close"]) - float(c["open"]))
     if rng == 0 or (rng > 0 and body / rng < 0.5):
@@ -22,12 +22,7 @@ def _fmt_date(d):
         return str(d)
 
 def _has_downmove(candles: List[Candle], prior_idx: int, min_bars: int, min_pct: float) -> bool:
-    """
-    Downmove into the gap:
-      Look back at least `min_bars` candles before the PRIOR bar.
-      Let Cmax = max(close[j]) over j in [prior_idx - min_bars, prior_idx - 1]
-      Condition: (Cmax - close_prior) / Cmax >= min_pct
-    """
+    
     start = prior_idx - min_bars
     end = prior_idx - 1
     if start < 0 or end < 0 or start > end:
@@ -42,12 +37,7 @@ def _has_downmove(candles: List[Candle], prior_idx: int, min_bars: int, min_pct:
     return (cmax - c_prior) / cmax >= min_pct
 
 def _has_upmove(candles: List[Candle], prior_idx: int, min_bars: int, min_pct: float) -> bool:
-    """
-    Upmove into the gap:
-      Look back at least `min_bars` candles before the PRIOR bar.
-      Let Cmin = min(close[j]) over j in [prior_idx - min_bars, prior_idx - 1]
-      Condition: (close_prior - Cmin) / Cmin >= min_pct
-    """
+   
     start = prior_idx - min_bars
     end = prior_idx - 1
     if start < 0 or end < 0 or start > end:
@@ -66,14 +56,7 @@ def detect_pro_gaps(
     min_bars: int = 3,
     min_pct: float = 0.02,  
 ) -> Dict[str, List[Dict]]:
-    """
-    Detect Pro Gap Ups and Pro Gap Downs across the series.
-    Returns:
-      {
-        "pro_gap_ups":   [ { index, prior_date, current_date, prev_close, curr_low,  zone_low, zone_high } ... ],
-        "pro_gap_downs": [ { index, prior_date, current_date, prev_close, curr_high, zone_low, zone_high } ... ],
-      }
-    """
+   
     n = len(candles)
     ups, downs = [], []
 

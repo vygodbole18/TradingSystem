@@ -23,20 +23,16 @@ def _zone_for_gap_down(prior: Candle, current: Candle) -> Tuple[float, float]:
     return lo, hi
 
 def _inside_zone(price: float, lo: float, hi: float) -> bool:
-    return lo <= price <= hi  # inclusive
+    return lo <= price <= hi  
 
 def _no_obstruction_between(candles: List[Candle], start_idx: int, end_idx: int, level_price: float) -> bool:
-    """
-    Ensure no candle in [start_idx .. end_idx] straddles the level (strict):
-      NOT (low < level < high) for any bar in the range.
-    If start_idx > end_idx (empty range), return True.
-    """
+
     if start_idx > end_idx:
         return True
     for t in range(start_idx, end_idx + 1):
         lo = float(candles[t]["low"])
         hi = float(candles[t]["high"])
-        if lo < level_price < hi:  # strict crossing; touches are allowed
+        if lo < level_price < hi: 
             return False
     return True
 
@@ -46,13 +42,10 @@ def detect_momentum_gaps(
     resistances: List[Dict],
     supports: List[Dict],
 ) -> Dict[str, List[Dict]]:
-    """
-    Identify momentum gaps with prior-only levels and no-obstruction rule.
-    """
+
     m_up: List[Dict] = []
     m_dn: List[Dict] = []
 
-    # Prepack levels as (price, index) for speed
     res_levels = [(float(r["price"]), int(r["index"])) for r in resistances]
     sup_levels = [(float(s["price"]), int(s["index"])) for s in supports]
 

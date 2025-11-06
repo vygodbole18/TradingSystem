@@ -1,13 +1,11 @@
-# test_resistance_support_percent.py
-# Daily-only tester (default last 100 bars) for bilateral wick-based R/S
-# with DIFFERENT left/right thresholds (default: left=2%, right=3%).
+
 
 from fetch import fetch_ohlc_data
 from resistance_support_percent_bilateral import (
     all_bilateral_resistance_support, _fmt_date
 )
 
-def show(symbol: str, lookback: int = 100, left_pct: float = 0.02, right_pct: float = 0.03):
+def show(symbol: str, lookback: int = 250, left_pct: float = 0.02, right_pct: float = 0.03):
     print(f"\n=== {symbol} | DAILY | last {lookback} | wick-based L={left_pct*100:.1f}%  R={right_pct*100:.1f}% ===")
     candles = fetch_ohlc_data(symbol, "day", lookback)
 
@@ -37,7 +35,7 @@ def show(symbol: str, lookback: int = 100, left_pct: float = 0.02, right_pct: fl
         print("\nSupports: NONE")
 
 if __name__ == "__main__":
-    symbols = ["RELIANCE", "HDFCBANK", "TCS"]  # edit as needed
+    symbols = ["ADANIPORTS"]  # edit as needed
     for sym in symbols:
         # Daily, last 100 bars, LEFT=2%, RIGHT=3%
-        show(sym, lookback=100, left_pct=0.02, right_pct=0.03)
+        show(sym, lookback=250, left_pct=0.02, right_pct=0.03)

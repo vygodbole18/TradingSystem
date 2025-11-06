@@ -79,3 +79,12 @@ def fetch_ohlc_data(symbol, interval="day", days_back=300):
             "close": float(b.get("close", 0))
         })
     return data
+
+def fetch_ltp(symbol: str, exchange: str = "NSE"):
+    key = f"{exchange}:{symbol}"
+    try:
+        data = kite.ltp(key)
+        return float(data[key]["last_price"])
+    except Exception as e:
+        print(f"Error fetching LTP for {symbol}: {e}")
+        return None

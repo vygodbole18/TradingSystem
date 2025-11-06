@@ -11,7 +11,7 @@ def _fmt_date(d):
 
 def _window_bounds(prior_idx: int, N: int) -> Tuple[int, int]:
     # Window is the N bars BEFORE the prior candle (i-1).
-    # We'll search for gaps inside [start_k .. prior_idx], but min/max closes use [start .. prior_idx-1].
+    # We'll search for gaps inside [start_k .. prior_idx]
     start = max(1, prior_idx - N)  
     return start, prior_idx
 
@@ -60,21 +60,7 @@ def detect_novice_gaps(
     N: int = 3,
     pct: float = 0.02,   # 2%
 ) -> Dict[str, List[Dict]]:
-    """
-    Scan series and return novice gap downs/ups.
-
-    Output:
-      {
-        "novice_gap_downs": [
-          { "index", "prior_date", "current_date",
-            "prev_close", "curr_open", "curr_close", "prior_low" }
-        ],
-        "novice_gap_ups": [
-          { "index", "prior_date", "current_date",
-            "prev_close", "curr_open", "curr_close", "prior_high" }
-        ]
-      }
-    """
+   
     downs, ups = [], []
     n = len(candles)
     if n < 2:
@@ -90,8 +76,8 @@ def detect_novice_gaps(
         open_i     = float(curr["open"])
         close_i    = float(curr["close"])
 
-        # ----- Novice Gap DOWN (exhaustion after rapid upmove) -----
-        # Strict open gap UP at i, then bearish engulfing close through prior low:
+        
+        
         # open[i] > close[i-1]  AND  close[i] < low[i-1]
         if open_i > prev_close and close_i < prior_low:
             start_k, end_k = _window_bounds(i-1, N)
@@ -107,8 +93,8 @@ def detect_novice_gaps(
                     "prior_low": prior_low,
                 })
 
-        # ----- Novice Gap UP (exhaustion after rapid downmove) -----
-        # Strict open gap DOWN at i, then bullish engulfing close through prior high:
+        
+        
         # open[i] < close[i-1]  AND  close[i] > high[i-1]
         if open_i < prev_close and close_i > prior_high:
             start_k, end_k = _window_bounds(i-1, N)
